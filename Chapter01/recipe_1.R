@@ -3,12 +3,12 @@
 ## Count table
 
 ### Load data
-count_dataframe <- readr::read_tsv(file.path(getwd(),"datasets", "ch1", "modencodefly_count_table.txt" ))
+count_dataframe <- readr::read_tsv(file.path(getwd(), "R-Bioinformatics-Cookbook", "datasets", "ch1", "modencodefly_count_table.txt" ))
 genes <- count_dataframe[['gene']]
 count_dataframe[['gene']] <- NULL
 count_matrix <- as.matrix(count_dataframe)
 rownames(count_matrix) <- genes
-pheno_data <- readr::read_table2(file.path(getwd(), "datasets", "ch1", "modencodefly_phenodata.txt"))
+pheno_data <- readr::read_table(file.path(getwd(), "R-Bioinformatics-Cookbook","datasets", "ch1", "modencodefly_phenodata.txt"))
 
 
 ### Specify experiments of interest 
@@ -38,10 +38,11 @@ topTags(result)
 
 
 ##eset
-load(file.path(getwd(), "datasets/ch1/modencodefly_eset.RData"))
+library(Biobase)
+load(file.path(getwd(), "R-Bioinformatics-Cookbook/datasets/ch1/modencodefly_eset.RData"))
 
 experiments_of_interest <- c("L1Larvae", "L2Larvae")
-columns_of_interest <- which( phenoData(modencodefly.eset)[['stage']] %in% experiments_of_interest )
+columns_of_interest <- which(phenoData(modencodefly.eset)[['stage']] %in% experiments_of_interest )
 
 grouping <- droplevels(phenoData(modencodefly.eset)[['stage']][columns_of_interest] )
 
