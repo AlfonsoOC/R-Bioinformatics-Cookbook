@@ -30,24 +30,29 @@ count_dge <- edgeR::DGEList(counts = counts_of_interest, group = grouping)
 
 
 ### Perform differential expression 
-design <- model.matrix(~ grouping)
-eset_dge <- edgeR::estimateDisp(count_dge, design)
+design <- model.matrix(~ grouping) #we create the experimental design descriptor design object with the base model.matrix() function.
+eset_dge <- edgeR::estimateDisp(count_dge, design) #We estimate the dispersions of each gene
+
+#Finally, a generalized linear model is fit and the quasi-likelihood F-test is applied with the two uses of glmQLFTest(), first with the dispersal estimates, eset_dge, then with the resulting fit object.
 fit <- edgeR::glmQLFit(eset_dge, design)
 result <- edgeR::glmQLFTest(fit, coef=2)
-topTags(result)
+
+topTags(result) #The columns show the gene name, the logFC value of the gene, the F value, the P value and the False Detection Rate (FDR). Usually, the column we want to make statistical conclusions from is FDR.
 
 
 ##eset
+# Here we are using an "ExpressionSet" object 
 library(Biobase)
-load(file.path(getwd(), "R-Bioinformatics-Cookbook/datasets/ch1/modencodefly_eset.RData"))
+load(file.path(getwd(), "R-Bioinformatics-Cookbook/datasets/ch1/modencodefly_eset.RData")) #loading the eset file
 
-experiments_of_interest <- c("L1Larvae", "L2Larvae")
-columns_of_interest <- which(phenoData(modencodefly.eset)[['stage']] %in% experiments_of_interest )
+experiments_of_interest <- c("L1Larvae", "L2Larvae") #check getting our interest experiments
+columns_of_interest <- which(phenoData(modencodefly.eset)[['stage']] %in% experiments_of_interest ) #this give us the pointer of interest experiments 
 
-grouping <- droplevels(phenoData(modencodefly.eset)[['stage']][columns_of_interest] )
+grouping <- droplevels(phenoData(modencodefly.eset)[['stage']][columns_of_interest] ) #making the factors, but in here we use "droplevels" - phenoData(modencodefly.eset)[['stage']] -> give usall the levels in the ExpresionSet
 
-counts_of_interest <- exprs(modencodefly.eset)[, columns_of_interest]
+counts_of_interest <- exprs(modencodefly.eset)[, columns_of_interest] # Extract the columns of interest of our data 
 
+#the next steps are has the first example
 eset_dge <- edgeR::DGEList(
   counts = counts_of_interest,
   group = grouping 
@@ -58,3 +63,4 @@ eset_dge <- edgeR::estimateDisp(eset_dge, design)
 fit <- edgeR::glmQLFit(eset_dge, design)
 result <- edgeR::glmQLFTest(fit, coef=2)
 topTags(result)
+
