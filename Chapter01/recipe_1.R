@@ -3,7 +3,7 @@
 ## Count table
 
 ### Load data
-count_dataframe <- readr::read_tsv(file.path(getwd(), "datasets", "ch1", "modencodefly_count_table.txt" ))
+count_dataframe <- readr::read_tsv(file.path(getwd(),"datasets", "ch1", "modencodefly_count_table.txt" ))
 genes <- count_dataframe[['gene']]
 count_dataframe[['gene']] <- NULL
 count_matrix <- as.matrix(count_dataframe)
