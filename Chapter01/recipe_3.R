@@ -13,7 +13,7 @@ prop_de
 
 finite_log2fc <-log2fc[is.finite(log2fc)] #remove the non finite ratios from log2fc
 plot(density(finite_log2fc)) #density plot shows distribution of ratios
-extRemes::qqnorm(finite_log2fc ) # plots the data agains data sampled, linear corelation indicate a normal distribution of the original data
+extRemes::qqnorm(finite_log2fc ) # plots the data gains data sampled, linear correlation indicate a normal distribution of the original data
 
 library(powsimR)
 library(dplyr)
