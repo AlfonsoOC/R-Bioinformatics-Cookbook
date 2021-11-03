@@ -2,18 +2,18 @@
 install.packages("devtools")
 devtools::install_github("bvieth/powsimR")
 
-arab_data <- readRDS(file.path(getwd(), "datasets", "ch1", "arabidopsis.RDS" ))
-means_mock <- rowMeans(arab_data[, c("mock1", "mock2", "mock3")])
+arab_data <- readRDS(file.path(getwd(), "/..","datasets", "ch1", "arabidopsis.RDS" ))
+means_mock <- rowMeans(arab_data[, c("mock1", "mock2", "mock3")]) #rowMeans function to get the mean exression of some columns
 means_hrcc <- rowMeans(arab_data[, c("hrcc1", "hrcc2", "hrcc3")])
-log2fc <- log2(means_hrcc / means_mock)
+log2fc <- log2(means_hrcc / means_mock) #making a log2 ratio 
 
 prop_de <- sum(abs(log2fc) > 2) / length(log2fc) 
 prop_de
 
 
-finite_log2fc <-log2fc[is.finite(log2fc)]
-plot(density(finite_log2fc))
-extRemes::qqnorm(finite_log2fc )
+finite_log2fc <-log2fc[is.finite(log2fc)] #remove the non finite ratios from log2fc
+plot(density(finite_log2fc)) #density plot shows distribution of ratios
+extRemes::qqnorm(finite_log2fc ) # plots the data agains data sampled, linear corelation indicate a normal distribution of the original data
 
 library(powsimR)
 library(dplyr)
