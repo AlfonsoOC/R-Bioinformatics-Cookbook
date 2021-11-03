@@ -6,7 +6,7 @@ get_annotated_regions_from_gff <- function(file_name) {
   as(gff, "GRanges")
 }
 
-get_annotated_regions_from_bed <- function(file_name){
+get_annotated_regions_from_bed <- function(file_name){ # This is a function to work with BedFiles
   bed <- rtracklayer::import.bed(file_name)
   as(bed, "GRanges")
 }
