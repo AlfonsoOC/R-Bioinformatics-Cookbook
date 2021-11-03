@@ -8,7 +8,7 @@
 library(SummarizedExperiment)
 
 #Load data and set up a function that creates region tags:
-arab_rse <- readRDS(file.path(getwd(),"R-Bioinformatics-Cookbook", "datasets", "ch1", "arabidopsis_rse.RDS") ) #RDS and RDATA R Data File Format
+arab_rse <- readRDS(file.path(getwd(),"R-Bioinformatics-Cookbook", "datasets", "ch1", "arabidopsis_rse.RDS") ) #RDS and RDATA R Data File Format, in this case is a GRanges Object
 
 #this is a fuction that make the rownames as follows: cromosoma:start-end
 make_tag <- function(grange_obj){ 
@@ -22,12 +22,16 @@ make_tag <- function(grange_obj){
 }
 
 #Extract data and annotate rows:
+#the code pulls out the actual data from RangedSummarizedExperiment using the assay() function.
 counts <- assay(arab_rse)
 
+#then we use our function to give rownames to our data 
 if ( ! is.null(names(rowRanges(arab_rse))) ){
   rownames(counts) <- names(rowRanges(arab_rse))
 } else {
   rownames(counts) <- make_tag(rowRanges(arab_rse))
 }
 
-head(counts)
+head(counts) #This will give the following output—a count matrix that has the location tag as the row name that can be used in DESeq and edgeR as described in Recipes 1 and 2 in this chapter:
+
+
