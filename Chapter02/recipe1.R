@@ -1,3 +1,6 @@
+##Finding SNPs and indels from sequence data using VariantTools
+
+#A key bioinformatics task is to take an alignment of high-throughput sequence reads, typically stored in a BAM file, and compute a list of variant positions.
 library(GenomicRanges)
 library(gmapR)
 library(rtracklayer)
@@ -5,7 +8,7 @@ library(VariantAnnotation)
 library(VariantTools)
 
 
-bam_folder <- file.path(getwd(), "datasets", "ch2")
+bam_folder <- file.path(getwd(), "/..","datasets", "ch2")
 bam_file <- file.path( bam_folder, "hg17_snps.bam")
 
 fasta_file <- file.path(bam_folder,"chr17.83k.fa")
