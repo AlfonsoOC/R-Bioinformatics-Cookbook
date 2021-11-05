@@ -64,6 +64,7 @@ orfs_to_keep <- predicted_orfs[keep]
 orfs_to_keep
 
 ##8.-writing to file
+#Once you've got a set of ORFs you're happy with, you'll likely want to save them to a file.
 extracted_orfs <- BSgenome::getSeq(dna_object, orfs_to_keep) 
 names(extracted_orfs) <- paste0("orf_", 1:length(orfs_to_keep))
 writeXStringSet(extracted_orfs, "saved_orfs.fa")
